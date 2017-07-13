@@ -1,0 +1,42 @@
+{
+  "type" : "object",
+  "id" : "urn:jsonschema:io:gravitee:resource:authprovider:inline:configuration:InlineAuthenticationProviderResourceConfiguration",
+  "properties" : {
+    "users" : {
+      "type" : "array",
+      "title": "Inline users",
+      "description": "List of inline users",
+      "items" : {
+        "type" : "object",
+        "title": "User",
+        "id" : "urn:jsonschema:io:gravitee:resource:authprovider:inline:model:User",
+        "properties" : {
+          "username" : {
+            "title": "Username",
+            "description": "Username",
+            "type" : "string"
+          },
+          "password" : {
+            "title": "Password",
+            "description": "Password",
+            "type" : "string"
+          },
+          "roles" : {
+            "type" : "array",
+            "title": "Roles",
+            "description": "Roles",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        },
+        "required": [
+          "username"
+        ]
+      }
+    }
+  },
+  "required": [
+    "users"
+  ]
+}
