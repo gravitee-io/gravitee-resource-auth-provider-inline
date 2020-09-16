@@ -21,7 +21,6 @@ import io.gravitee.resource.authprovider.api.AuthenticationProviderResource;
 import io.gravitee.resource.authprovider.inline.configuration.InlineAuthenticationProviderResourceConfiguration;
 import io.gravitee.resource.authprovider.inline.model.User;
 
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
 
@@ -53,7 +52,7 @@ public class InlineAuthenticationProviderResource extends AuthenticationProvider
         Authentication authentication = null;
 
         if (password == null || password.equals(userMatch.get().getPassword())) {
-            authentication = new Authentication(username, password, new ArrayList<>(userMatch.get().getRoles()));
+            authentication = new Authentication(username); 
         }
 
         handler.handle(authentication);
