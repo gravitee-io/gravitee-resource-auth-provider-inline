@@ -15,8 +15,6 @@
  */
 package io.gravitee.resource.authprovider.inline.model;
 
-import java.util.Set;
-
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
@@ -26,8 +24,6 @@ public class User {
     private String username;
 
     private String password;
-
-    private Set<String> roles;
 
     public String getUsername() {
         return username;
@@ -43,13 +39,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Set<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<String> roles) {
-        this.roles = roles;
     }
 }
