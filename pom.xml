@@ -32,6 +32,7 @@
     <version>1.1.0-SNAPSHOT</version>
 
     <name>Gravitee.io APIM - Resource - Auth Provider - Inline</name>
+    <description>The resource is defined to authenticate a user in memory.</description>
 
     <properties>
         <gravitee-resource-api.version>1.0.0</gravitee-resource-api.version>
@@ -76,28 +77,26 @@
         </resources>
 
         <plugins>
-            <!--
             <plugin>
-                <groupId>io.gravitee.maven.plugins</groupId>
-                <artifactId>json-schema-generator-maven-plugin</artifactId>
-                <version>${json-schema-generator-maven-plugin.version}</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0.0</version>
                 <executions>
                     <execution>
-                        <phase>prepare-package</phase>
+                        <phase>initialize</phase>
+                        <id>load-plugin-properties</id>
                         <goals>
-                            <goal>generate-json-schemas</goal>
+                            <goal>read-project-properties</goal>
                         </goals>
                         <configuration>
-                            <includes>
-                                <include>io/gravitee/resource/authprovider/inline/configuration/InlineAuthenticationProviderResourceConfiguration.class</include>
-                            </includes>
-                            <outputDirectory>${json-schema-generator-maven-plugin.outputDirectory}</outputDirectory>
+                            <files>
+                                <file>${project.basedir}/src/main/resources/plugin.properties</file>
+                            </files>
+                            <quiet>false</quiet>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            -->
-
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>${maven-assembly-plugin.version}</version>
