@@ -15,6 +15,7 @@
  */
 package io.gravitee.resource.authprovider.inline;
 
+import io.gravitee.gateway.api.ExecutionContext;
 import io.gravitee.gateway.api.handler.Handler;
 import io.gravitee.resource.authprovider.api.Authentication;
 import io.gravitee.resource.authprovider.api.AuthenticationProviderResource;
@@ -31,7 +32,7 @@ import java.util.Set;
 public class InlineAuthenticationProviderResource extends AuthenticationProviderResource<InlineAuthenticationProviderResourceConfiguration> {
 
     @Override
-    public void authenticate(String username, String password, Handler<Authentication> handler) {
+    public void authenticate(String username, String password, ExecutionContext executionContext, Handler<Authentication> handler) {
         Set<User> users = configuration().getUsers();
         if (users == null) {
             handler.handle(null);
