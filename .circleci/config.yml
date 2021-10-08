@@ -47,6 +47,8 @@ jobs:
         default: true
         description: "Run in dry run mode?"
     steps:
+      - attach_workspace:
+          at: /tmp
       - run:
           name: "generate /tmp/gio.maven.project.release.version"
           command: |
