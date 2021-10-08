@@ -51,6 +51,7 @@ jobs:
           name: "generate /tmp/gio.maven.project.release.version"
           command: |
             echo << pipeline.parameters.replayed_release >>  >  /tmp/gio.maven.project.release.version
+      - setup_remote_docker
       - gravitee/d_publish_package_bundle_unit:
           dry_run: << parameters.dry_run >>
           zip_file_path: /tmp/package-bundle-resources/gravitee-resource-auth-provider-inline-GIO_VERSION_PLACEHOLDER.zip
