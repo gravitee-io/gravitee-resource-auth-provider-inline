@@ -17,7 +17,6 @@ package io.gravitee.resource.authprovider.inline.configuration;
 
 import io.gravitee.resource.api.ResourceConfiguration;
 import io.gravitee.resource.authprovider.inline.model.User;
-
 import java.util.Set;
 
 /**
