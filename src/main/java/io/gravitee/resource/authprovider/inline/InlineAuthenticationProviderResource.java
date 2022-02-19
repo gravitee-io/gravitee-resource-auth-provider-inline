@@ -21,7 +21,6 @@ import io.gravitee.resource.authprovider.api.Authentication;
 import io.gravitee.resource.authprovider.api.AuthenticationProviderResource;
 import io.gravitee.resource.authprovider.inline.configuration.InlineAuthenticationProviderResourceConfiguration;
 import io.gravitee.resource.authprovider.inline.model.User;
-
 import java.util.Optional;
 import java.util.Set;
 
@@ -29,7 +28,8 @@ import java.util.Set;
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
-public class InlineAuthenticationProviderResource extends AuthenticationProviderResource<InlineAuthenticationProviderResourceConfiguration> {
+public class InlineAuthenticationProviderResource
+    extends AuthenticationProviderResource<InlineAuthenticationProviderResourceConfiguration> {
 
     @Override
     public void authenticate(String username, String password, ExecutionContext executionContext, Handler<Authentication> handler) {
@@ -39,13 +39,14 @@ public class InlineAuthenticationProviderResource extends AuthenticationProvider
             return;
         }
 
-        Optional<User> userMatch = configuration().getUsers()
-                .stream()
-                .filter(user -> user.getUsername().equalsIgnoreCase(username))
-                .findFirst();
+        Optional<User> userMatch = configuration()
+            .getUsers()
+            .stream()
+            .filter(user -> user.getUsername().equalsIgnoreCase(username))
+            .findFirst();
 
         // No user match the username
-        if (! userMatch.isPresent()) {
+        if (!userMatch.isPresent()) {
             handler.handle(null);
             return;
         }
@@ -53,7 +54,7 @@ public class InlineAuthenticationProviderResource extends AuthenticationProvider
         Authentication authentication = null;
 
         if (password == null || password.equals(userMatch.get().getPassword())) {
-            authentication = new Authentication(username); 
+            authentication = new Authentication(username);
         }
 
         handler.handle(authentication);
