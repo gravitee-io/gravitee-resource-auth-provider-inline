@@ -82,6 +82,7 @@
             <groupId>io.gravitee.resource</groupId>
             <artifactId>gravitee-resource-auth-provider</artifactId>
             <version>${gravitee-resource-auth-provider.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
