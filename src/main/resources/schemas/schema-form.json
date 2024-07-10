@@ -1,6 +1,6 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "type" : "object",
-  "id" : "urn:jsonschema:io:gravitee:resource:authprovider:inline:configuration:InlineAuthenticationProviderResourceConfiguration",
   "properties" : {
     "users" : {
       "type" : "array",
@@ -9,7 +9,6 @@
       "items" : {
         "type" : "object",
         "title": "User",
-        "id" : "urn:jsonschema:io:gravitee:resource:authprovider:inline:model:User",
         "properties" : {
           "username" : {
             "title": "Username",
