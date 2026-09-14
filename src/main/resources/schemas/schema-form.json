@@ -1,41 +1,37 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "type" : "object",
-  "properties" : {
-    "users" : {
-      "type" : "array",
-      "title": "Inline users",
-      "description": "List of inline users",
-      "items" : {
-        "type" : "object",
-        "title": "User",
-        "properties" : {
-          "username" : {
-            "title": "Username",
-            "description": "Username",
-            "type" : "string"
-          },
-          "password" : {
-            "title": "Password",
-            "description": "Password",
-            "type" : "string"
-          },
-          "roles" : {
-            "type" : "array",
-            "title": "Roles",
-            "description": "Roles",
-            "items" : {
-              "type" : "string"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+        "users": {
+            "type": "array",
+            "title": "Inline users",
+            "description": "List of inline users",
+            "items": {
+                "type": "object",
+                "title": "User",
+                "properties": {
+                    "username": {
+                        "title": "Username",
+                        "description": "Username",
+                        "type": "string"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Password",
+                        "type": "string"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "title": "Roles",
+                        "description": "Roles",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": ["username"]
             }
-          }
-        },
-        "required": [
-          "username"
-        ]
-      }
-    }
-  },
-  "required": [
-    "users"
-  ]
+        }
+    },
+    "required": ["users"]
 }

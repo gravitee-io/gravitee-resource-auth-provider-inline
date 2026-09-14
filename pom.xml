@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (C) 2015 The Gravitee team (http://gravitee.io)
+    Copyright © 2015 The Gravitee team (http://gravitee.io)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
-            http://www.apache.org/licenses/LICENSE-2.0
+        http://www.apache.org/licenses/LICENSE-2.0
 
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,38 +24,34 @@
     <parent>
         <groupId>io.gravitee</groupId>
         <artifactId>gravitee-parent</artifactId>
-        <version>20.2</version>
+        <version>24.0.2</version>
     </parent>
 
     <groupId>io.gravitee.resource</groupId>
     <artifactId>gravitee-resource-auth-provider-inline</artifactId>
-    <version>1.4.0</version>
+    <version>2.0.0</version>
 
     <name>Gravitee.io APIM - Resource - Auth Provider - Inline</name>
     <description>The resource is defined to authenticate a user in memory.</description>
 
     <properties>
-        <gravitee-bom.version>2.1</gravitee-bom.version>
+        <gravitee-apim.version>4.12.19</gravitee-apim.version>
         <gravitee-resource-api.version>1.1.0</gravitee-resource-api.version>
-        <gravitee-gateway-api.version>1.31.0</gravitee-gateway-api.version>
         <gravitee-resource-auth-provider.version>1.3.0</gravitee-resource-auth-provider.version>
 
         <json-schema-generator-maven-plugin.version>1.3.0</json-schema-generator-maven-plugin.version>
         <json-schema-generator-maven-plugin.outputDirectory>${project.build.directory}/schemas</json-schema-generator-maven-plugin.outputDirectory>
 
-        <maven-assembly-plugin.version>2.6</maven-assembly-plugin.version>
         <!-- Property used by the publication job in CI-->
         <publish-folder-path>graviteeio-apim/plugins/resources</publish-folder-path>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- Gravitee dependencies -->
-            <!-- Import bom to properly inherit all dependencies -->
             <dependency>
-                <groupId>io.gravitee</groupId>
-                <artifactId>gravitee-bom</artifactId>
-                <version>${gravitee-bom.version}</version>
+                <groupId>io.gravitee.apim</groupId>
+                <artifactId>gravitee-apim-bom</artifactId>
+                <version>${gravitee-apim.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -63,7 +59,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <!-- Gravitee.io API-->
         <dependency>
             <groupId>io.gravitee.resource</groupId>
             <artifactId>gravitee-resource-api</artifactId>
@@ -74,7 +69,6 @@
         <dependency>
             <groupId>io.gravitee.gateway</groupId>
             <artifactId>gravitee-gateway-api</artifactId>
-            <version>${gravitee-gateway-api.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -83,6 +77,18 @@
             <artifactId>gravitee-resource-auth-provider</artifactId>
             <version>${gravitee-resource-auth-provider.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- test -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -98,7 +104,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
-                <version>1.0.0</version>
                 <executions>
                     <execution>
                         <phase>initialize</phase>
@@ -117,7 +122,6 @@
             </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>${maven-assembly-plugin.version}</version>
                 <configuration>
                     <appendAssemblyId>false</appendAssemblyId>
                     <descriptors>
@@ -130,23 +134,6 @@
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.hubspot.maven.plugins</groupId>
-                <artifactId>prettier-maven-plugin</artifactId>
-                <version>0.17</version>
-                <configuration>
-                    <nodeVersion>12.13.0</nodeVersion>
-                    <prettierJavaVersion>1.6.1</prettierJavaVersion>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>check</goal>
                         </goals>
                     </execution>
                 </executions>
