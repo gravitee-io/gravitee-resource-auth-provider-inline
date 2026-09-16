@@ -1,3 +1,16 @@
+# [2.0.0](https://github.com/gravitee-io/gravitee-resource-auth-provider-inline/compare/1.4.0...2.0.0) (2026-09-16)
+
+
+### Build System
+
+* align build baseline with Java 21 ([a8c0e54](https://github.com/gravitee-io/gravitee-resource-auth-provider-inline/commit/a8c0e541474e738faab32f3ab30242b84ed0a9ec))
+
+
+### BREAKING CHANGES
+
+* plugin 2.x requires APIM 4.12+ and JDK 21. Version 1.x
+remains compatible with APIM 4.7+ on JDK 11.
+
 # [1.4.0](https://github.com/gravitee-io/gravitee-resource-auth-provider-inline/compare/1.3.0...1.4.0) (2024-07-11)
 
 
