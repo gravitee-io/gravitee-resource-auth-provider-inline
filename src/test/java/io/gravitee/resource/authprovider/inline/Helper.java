@@ -16,24 +16,27 @@
 package io.gravitee.resource.authprovider.inline;
 
 import io.gravitee.resource.api.AbstractConfigurableResource;
+import io.gravitee.resource.authprovider.api.Authentication;
 import io.gravitee.resource.authprovider.inline.configuration.InlineAuthenticationProviderResourceConfiguration;
 import io.gravitee.resource.authprovider.inline.model.User;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 final class Helper {
 
     private Helper() {}
 
     static InlineAuthenticationProviderResource resourceWithUsers(User... users) {
-        InlineAuthenticationProviderResourceConfiguration configuration = new InlineAuthenticationProviderResourceConfiguration();
-        configuration.setUsers(users.length == 0 ? null : new LinkedHashSet<>(Arrays.asList(users)));
-
         InlineAuthenticationProviderResource resource = new InlineAuthenticationProviderResource();
-        setConfiguration(resource, configuration);
+        setConfiguration(resource, configurationWithUsers(users));
         return resource;
+    }
+
+    static InlineAuthenticationProviderResourceConfiguration configurationWithUsers(User... users) {
+        InlineAuthenticationProviderResourceConfiguration configuration = new InlineAuthenticationProviderResourceConfiguration();
+        configuration.setUsers(users.length == 0 ? null : new ArrayList<>(Arrays.asList(users)));
+        return configuration;
     }
 
     static User user(String username, String password) {
@@ -41,6 +44,12 @@ final class Helper {
         user.setUsername(username);
         user.setPassword(password);
         return user;
+    }
+
+    static Authentication authenticate(InlineAuthenticationProviderResource resource, String username, String password) {
+        Authentication[] result = new Authentication[1];
+        resource.authenticate(username, password, null, auth -> result[0] = auth);
+        return result[0];
     }
 
     private static void setConfiguration(

@@ -26,7 +26,7 @@ class InlineAuthenticationProviderResourceTest {
     void should_authenticate_when_credentials_match() {
         InlineAuthenticationProviderResource resource = Helper.resourceWithUsers(Helper.user("alice", "MyP@ssw0rd!"));
 
-        Authentication authentication = authenticate(resource, "alice", "MyP@ssw0rd!");
+        Authentication authentication = Helper.authenticate(resource, "alice", "MyP@ssw0rd!");
 
         assertThat(authentication).isNotNull();
         assertThat(authentication.getUsername()).isEqualTo("alice");
@@ -36,7 +36,7 @@ class InlineAuthenticationProviderResourceTest {
     void should_authenticate_when_username_matches_case_insensitively() {
         InlineAuthenticationProviderResource resource = Helper.resourceWithUsers(Helper.user("alice", "secret"));
 
-        Authentication authentication = authenticate(resource, "ALICE", "secret");
+        Authentication authentication = Helper.authenticate(resource, "ALICE", "secret");
 
         assertThat(authentication).isNotNull();
         assertThat(authentication.getUsername()).isEqualTo("ALICE");
@@ -46,7 +46,7 @@ class InlineAuthenticationProviderResourceTest {
     void should_reject_unknown_user() {
         InlineAuthenticationProviderResource resource = Helper.resourceWithUsers(Helper.user("alice", "secret"));
 
-        Authentication authentication = authenticate(resource, "bob", "secret");
+        Authentication authentication = Helper.authenticate(resource, "bob", "secret");
 
         assertThat(authentication).isNull();
     }
@@ -55,7 +55,7 @@ class InlineAuthenticationProviderResourceTest {
     void should_reject_wrong_password() {
         InlineAuthenticationProviderResource resource = Helper.resourceWithUsers(Helper.user("alice", "secret"));
 
-        Authentication authentication = authenticate(resource, "alice", "wrong");
+        Authentication authentication = Helper.authenticate(resource, "alice", "wrong");
 
         assertThat(authentication).isNull();
     }
@@ -64,7 +64,7 @@ class InlineAuthenticationProviderResourceTest {
     void should_reject_when_no_users_configured() {
         InlineAuthenticationProviderResource resource = Helper.resourceWithUsers();
 
-        Authentication authentication = authenticate(resource, "alice", "secret");
+        Authentication authentication = Helper.authenticate(resource, "alice", "secret");
 
         assertThat(authentication).isNull();
     }
@@ -73,7 +73,7 @@ class InlineAuthenticationProviderResourceTest {
     void should_compare_password_as_literal_string() {
         InlineAuthenticationProviderResource resource = Helper.resourceWithUsers(Helper.user("alice", "{#secrets.get('/vault/pwd')}"));
 
-        Authentication authentication = authenticate(resource, "alice", "{#secrets.get('/vault/pwd')}");
+        Authentication authentication = Helper.authenticate(resource, "alice", "{#secrets.get('/vault/pwd')}");
 
         assertThat(authentication).isNotNull();
         assertThat(authentication.getUsername()).isEqualTo("alice");
@@ -83,15 +83,9 @@ class InlineAuthenticationProviderResourceTest {
     void should_authenticate_when_password_contains_braces_without_el_marker() {
         InlineAuthenticationProviderResource resource = Helper.resourceWithUsers(Helper.user("alice", "p@ss{word}"));
 
-        Authentication authentication = authenticate(resource, "alice", "p@ss{word}");
+        Authentication authentication = Helper.authenticate(resource, "alice", "p@ss{word}");
 
         assertThat(authentication).isNotNull();
         assertThat(authentication.getUsername()).isEqualTo("alice");
-    }
-
-    private Authentication authenticate(InlineAuthenticationProviderResource resource, String username, String password) {
-        Authentication[] result = new Authentication[1];
-        resource.authenticate(username, password, null, auth -> result[0] = auth);
-        return result[0];
     }
 }
