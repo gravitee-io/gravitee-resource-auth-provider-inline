@@ -17,36 +17,89 @@ package io.gravitee.resource.authprovider.inline;
 
 import io.gravitee.gateway.api.ExecutionContext;
 import io.gravitee.gateway.api.handler.Handler;
+import io.gravitee.gateway.reactive.api.context.DeploymentContext;
 import io.gravitee.resource.authprovider.api.Authentication;
 import io.gravitee.resource.authprovider.api.AuthenticationProviderResource;
 import io.gravitee.resource.authprovider.inline.configuration.InlineAuthenticationProviderResourceConfiguration;
+import io.gravitee.resource.authprovider.inline.configuration.InlineAuthenticationProviderResourceConfigurationEvaluator;
 import io.gravitee.resource.authprovider.inline.model.User;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+import javax.inject.Inject;
+import lombok.CustomLog;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
+@CustomLog
 public class InlineAuthenticationProviderResource
     extends AuthenticationProviderResource<InlineAuthenticationProviderResourceConfiguration> {
 
+    @Inject
+    private DeploymentContext deploymentContext;
+
+    private InlineAuthenticationProviderResourceConfiguration evaluatedConfiguration;
+    private boolean usable = true;
+    private String unusableReason;
+
+    @Override
+    public InlineAuthenticationProviderResourceConfiguration configuration() {
+        if (evaluatedConfiguration != null) {
+            return evaluatedConfiguration;
+        }
+        return super.configuration();
+    }
+
+    @Override
+    protected void doStart() throws Exception {
+        super.doStart();
+
+        InlineAuthenticationProviderResourceConfiguration rawConfiguration = super.configuration();
+
+        if (deploymentContext == null) {
+            if (ConfigurationPasswords.containsElMarker(rawConfiguration)) {
+                markUnusable(
+                    "Legacy resource classloader cannot evaluate EL expressions in inline user passwords; authentication is disabled",
+                    null
+                );
+                return;
+            }
+            evaluatedConfiguration = rawConfiguration;
+            return;
+        }
+
+        try {
+            InlineAuthenticationProviderResourceConfiguration evaluated = new InlineAuthenticationProviderResourceConfigurationEvaluator(
+                rawConfiguration
+            ).evalNow(deploymentContext);
+            ConfigurationPasswords.validateResolvedPasswords(rawConfiguration, evaluated);
+            evaluatedConfiguration = evaluated;
+        } catch (Exception exception) {
+            markUnusable("Unable to evaluate inline authentication provider configuration", exception);
+        }
+    }
+
     @Override
     public void authenticate(String username, String password, ExecutionContext executionContext, Handler<Authentication> handler) {
-        Set<User> users = configuration().getUsers();
+        if (!usable) {
+            log.warn("Refusing inline authentication: {}", unusableReason);
+            handler.handle(null);
+            return;
+        }
+
+        List<User> users = configuration().getUsers();
         if (users == null) {
             handler.handle(null);
             return;
         }
 
-        Optional<User> userMatch = configuration()
-            .getUsers()
+        Optional<User> userMatch = users
             .stream()
             .filter(user -> user.getUsername().equalsIgnoreCase(username))
             .findFirst();
 
-        // No user match the username
-        if (!userMatch.isPresent()) {
+        if (userMatch.isEmpty()) {
             handler.handle(null);
             return;
         }
@@ -58,5 +111,23 @@ public class InlineAuthenticationProviderResource
         }
 
         handler.handle(authentication);
+    }
+
+    boolean isUsable() {
+        return usable;
+    }
+
+    String unusableReason() {
+        return unusableReason;
+    }
+
+    private void markUnusable(String reason, Throwable cause) {
+        usable = false;
+        unusableReason = reason;
+        if (cause == null) {
+            log.error(reason);
+        } else {
+            log.error(reason, cause);
+        }
     }
 }

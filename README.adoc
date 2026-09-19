@@ -49,10 +49,12 @@ You can configure the resource with the following options :
 
 .^|users[].password
 ^.^|-
-|Password
+|Password resolved at API deploy time from Expression Language and/or secrets (not per request)
 ^.^|string
 ^.^|-
 |===
+
+NOTE: Passwords are evaluated once when the API is deployed. API properties, dictionaries, and secrets are supported. Request-scoped variables are not available. Secret rotation requires redeploying the API. Literal passwords containing `{#`, `{T`, or `{(` are evaluated as expressions in plugin 2.x.
 
 [source,json]
 .Configuration example
