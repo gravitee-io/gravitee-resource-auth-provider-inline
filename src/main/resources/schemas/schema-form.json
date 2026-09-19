@@ -12,12 +12,12 @@
                 "properties": {
                     "username": {
                         "title": "Username",
-                        "description": "Username",
+                        "description": "Username. Supports deploy-time Expression Language only (API properties, dictionaries). Request-scoped variables are not available.",
                         "type": "string"
                     },
                     "password": {
                         "title": "Password",
-                        "description": "Password",
+                        "description": "Password resolved once at API deploy time from Expression Language and/or secrets. Request-scoped variables are not available. Secret rotation requires redeploying the API.",
                         "type": "string"
                     }
                 },

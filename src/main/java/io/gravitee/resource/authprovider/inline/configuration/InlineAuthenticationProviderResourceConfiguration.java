@@ -15,23 +15,19 @@
  */
 package io.gravitee.resource.authprovider.inline.configuration;
 
+import io.gravitee.plugin.annotation.ConfigurationEvaluator;
 import io.gravitee.resource.api.ResourceConfiguration;
 import io.gravitee.resource.authprovider.inline.model.User;
-import java.util.Set;
+import java.util.List;
+import lombok.Data;
 
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
+@Data
+@ConfigurationEvaluator
 public class InlineAuthenticationProviderResourceConfiguration implements ResourceConfiguration {
 
-    private Set<User> users;
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
+    private List<User> users;
 }

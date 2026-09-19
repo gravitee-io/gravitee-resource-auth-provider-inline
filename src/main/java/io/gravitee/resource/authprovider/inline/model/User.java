@@ -15,29 +15,20 @@
  */
 package io.gravitee.resource.authprovider.inline.model;
 
+import io.gravitee.secrets.api.annotation.Secret;
+import io.gravitee.secrets.api.el.FieldKind;
+import lombok.Data;
+
 /**
  * @author David BRASSELY (david.brassely at graviteesource.com)
  * @author GraviteeSource Team
  */
+@Data
 public class User {
 
+    @Secret
     private String username;
 
+    @Secret(FieldKind.PASSWORD)
     private String password;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
