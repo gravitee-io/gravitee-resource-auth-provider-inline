@@ -36,8 +36,14 @@ import lombok.CustomLog;
 public class InlineAuthenticationProviderResource
     extends AuthenticationProviderResource<InlineAuthenticationProviderResourceConfiguration> {
 
-    @Inject
     private DeploymentContext deploymentContext;
+
+    public InlineAuthenticationProviderResource() {}
+
+    @Inject
+    public InlineAuthenticationProviderResource(DeploymentContext deploymentContext) {
+        this.deploymentContext = deploymentContext;
+    }
 
     private InlineAuthenticationProviderResourceConfiguration evaluatedConfiguration;
     private boolean usable = true;
