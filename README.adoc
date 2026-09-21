@@ -14,19 +14,16 @@ Gravitee.io Inline Authentication Provider resource is used to validate user cre
 
 Use this resource with the **Basic Authentication** policy on the request flow.
 
-== Compatibility with APIM
+== Compatibility matrix
 
 |===
-| Plugin version | APIM version | Java version
+| Plugin version | APIM             | Java version
 
-| 2.x
-| 4.12.x and above
-| 21
-
-| 1.x
-| 4.7.x and above
-| 11
+| 2.x            | 4.9.x to latest  | 21
+| 1.x            | 4.7.x and above  | 11
 |===
+
+The *Java version* column is the bytecode level of the latest release of each line, which sets the minimum runtime able to load the artifact.
 
 == Configuration
 
