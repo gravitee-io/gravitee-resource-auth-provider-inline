@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/gravitee-io/gravitee-resource-auth-provider-inline/compare/2.0.0...2.0.1) (2026-09-22)
+
+
+### Bug Fixes
+
+* build against the oldest APIM this plugin supports ([1a6dbb2](https://github.com/gravitee-io/gravitee-resource-auth-provider-inline/commit/1a6dbb24961bd1dc3e0d622cf731e48719b55a5a))
+
 # [2.0.0](https://github.com/gravitee-io/gravitee-resource-auth-provider-inline/compare/1.4.0...2.0.0) (2026-09-16)
 
 
