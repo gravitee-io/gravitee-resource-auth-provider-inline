@@ -1,3 +1,17 @@
+# [3.0.0](https://github.com/gravitee-io/gravitee-resource-auth-provider-inline/compare/2.0.1...3.0.0) (2026-10-01)
+
+
+### Features
+
+* resolve inline auth passwords at deploy time ([9f95d91](https://github.com/gravitee-io/gravitee-resource-auth-provider-inline/commit/9f95d910675c46d5dbdc687e74af23f9cc987aa6))
+
+
+### BREAKING CHANGES
+
+* Passwords containing `{#`, `{T`, or `{(` are evaluated as
+expressions at deploy time. Literal values with those patterns change
+behaviour. Secret rotation requires API redeploy.
+
 ## [2.0.1](https://github.com/gravitee-io/gravitee-resource-auth-provider-inline/compare/2.0.0...2.0.1) (2026-09-22)
 
 
