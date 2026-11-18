@@ -61,6 +61,21 @@ class InlineAuthenticationProviderResourceTest {
     }
 
     @Test
+    void should_reject_when_password_is_missing() {
+        InlineAuthenticationProviderResource resource = Helper.resourceWithUsers(Helper.user("alice", "secret"));
+
+        assertThat(Helper.authenticate(resource, "alice", null)).isNull();
+        assertThat(Helper.authenticate(resource, "ALICE", null)).isNull();
+    }
+
+    @Test
+    void should_reject_user_configured_without_password() {
+        InlineAuthenticationProviderResource resource = Helper.resourceWithUsers(Helper.user("bob", null));
+
+        assertThat(Helper.authenticate(resource, "bob", null)).isNull();
+    }
+
+    @Test
     void should_reject_when_no_users_configured() {
         InlineAuthenticationProviderResource resource = Helper.resourceWithUsers();
 

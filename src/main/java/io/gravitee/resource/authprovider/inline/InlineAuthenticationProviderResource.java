@@ -106,7 +106,7 @@ public class InlineAuthenticationProviderResource
 
         Authentication authentication = null;
 
-        if (password == null || password.equals(userMatch.get().getPassword())) {
+        if (password != null && password.equals(userMatch.get().getPassword())) {
             authentication = new Authentication(username);
         }
 
