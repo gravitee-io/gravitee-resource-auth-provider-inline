@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/gravitee-io/gravitee-resource-auth-provider-inline/compare/3.0.0...3.0.1) (2026-11-19)
+
+
+### Bug Fixes
+
+* **inline-auth:** reject a missing password ([ba4209d](https://github.com/gravitee-io/gravitee-resource-auth-provider-inline/commit/ba4209dcbe3d14ee27d162a5f905959459687b2e))
+
 # [3.0.0](https://github.com/gravitee-io/gravitee-resource-auth-provider-inline/compare/2.0.1...3.0.0) (2026-10-01)
 
 
